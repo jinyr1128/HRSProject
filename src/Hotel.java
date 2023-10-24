@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 class Hotel {
     private double assets;// 호텔의 보유 자산(환불이나 뭐 이런저런 일을 위해서 만들어둔것입니다 별 필요없어 보이긴해요)
     private Map<String, Room> rooms;// 방들의 정보 (방키로 방에 접근)키에 따라 호텔의 각 방에 대한 정보를 저장
-    private List<Reservation> reservations;// 예약 리스트
+    private static List<Reservation> reservations;// 예약 리스트
 
     public Hotel() {
         this.assets = 10000;// 기본 자산 10000 설정
@@ -30,11 +30,13 @@ class Hotel {
         LocalDate inputDate = LocalDate.parse(dateStr, formatter);
         // 현재 날짜를 가져오는 식???
         LocalDate currentDate = LocalDate.now();
+
         // 입력한 날짜가 현재 날짜 이전인 경우 예약 거절
         if (inputDate.isBefore(currentDate)) {
             System.out.println("당신은 타임머신타려고요? 지난 날짜는 예약 안되요~.");
             return null;//거절~
         }
+
         // 방이 있고 고객이 돈을 지불할 수 있는 경우
         if (room != null && customer.canAfford(room.getPrice())) {
             // 새로운 예약 ID를 생성
@@ -42,8 +44,9 @@ class Hotel {
 
             // 새로운 예약을 생성하고 reservations 리스트에 추가
             reservations.add(new Reservation(id, room, customer, dateStr));
-            // 예약 ID를 반환
-            return id;
+
+            assets += room.getPrice();      // 총 자산 업데이트
+            return id;      // 예약 ID를 반환
 
         } else {
             // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
@@ -60,14 +63,25 @@ class Hotel {
         return reservations;
     }
     // 특정 고객의 예약 정보 반환 메소드
-    public List<Reservation> getCustomerReservations(String name) {
-        List<Reservation> customerReservations = new ArrayList<>();
+    public Reservation getCustomerReservations(UUID id) {
         for (Reservation reservation : reservations) {
-            if (reservation.getCustomerName().equals(name)) {
-                customerReservations.add(reservation);
+            if (reservation.getId().equals(id)) {
+                return reservation;
             }
         }
-        return customerReservations;
+        return null;
+    }
+
+    public static boolean checkRooms(String key, String date){
+        // 해당 날짜에 key 방이 예약 되어 있는지 확인
+
+        boolean flag = true;
+        for(Reservation r : reservations){                                          // 전체 예약 목록 순회
+            if(r.getRoom().getKey().equals(key) && r.getDate().equals(date)){       // 해당 날짜(date)에 (key)방이 이미 예약되었는지 확인
+                flag = false;                                                       // 예약이 되어 있으므로 예약 불가 (false return)
+            }
+        }
+        return flag;
     }
 
     // 총 보유 자산 출력
