@@ -31,4 +31,5 @@ class Reservation {
     public String getDate() {
         return date;
     }
+
 }

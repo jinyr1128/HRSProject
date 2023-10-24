@@ -39,10 +39,12 @@ class Hotel {
         if (room != null && customer.canAfford(room.getPrice())) {
             // 새로운 예약 ID를 생성
             UUID id = UUID.randomUUID();
+
             // 새로운 예약을 생성하고 reservations 리스트에 추가
             reservations.add(new Reservation(id, room, customer, dateStr));
             // 예약 ID를 반환
             return id;
+
         } else {
             // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
             return null;
@@ -66,5 +68,10 @@ class Hotel {
             }
         }
         return customerReservations;
+    }
+
+    // 총 보유 자산 출력
+    public void getAssets() {
+        System.out.println(assets);
     }
 }
