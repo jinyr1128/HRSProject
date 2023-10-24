@@ -26,6 +26,7 @@ class Hotel {
         if (room != null && customer.canAfford(room.getPrice())) {
             UUID id = UUID.randomUUID();
             reservations.add(new Reservation(id, room, customer, date));
+            assets += room.getPrice();
             return id;// 예약 ID 반환
         } else {
             return null;// 예약 불가능
@@ -50,5 +51,10 @@ class Hotel {
             }
         }
         return customerReservations;
+    }
+
+    // 총 보유 자산 출력
+    public void getAssets() {
+        System.out.println(assets);
     }
 }
