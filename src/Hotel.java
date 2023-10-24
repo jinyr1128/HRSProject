@@ -6,7 +6,7 @@ class Hotel {
     private List<Reservation> reservations;
 
     public Hotel() {
-        this.assets = 10000;  // 초기 자산
+        this.assets = 10000;
         this.rooms = new HashMap<>();
         this.reservations = new ArrayList<>();
 
