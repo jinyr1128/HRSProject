@@ -1,4 +1,6 @@
 import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 class Hotel {
     private double assets;// 호텔의 보유 자산(환불이나 뭐 이런저런 일을 위해서 만들어둔것입니다 별 필요없어 보이긴해요)
@@ -19,16 +21,36 @@ class Hotel {
         rooms.put("veryBig2", new Room("veryBig2", 200, "veryBig"));
     }
     // 방 예약 메소드
-    public UUID reserveRoom(String roomKey, Customer customer, String date) {
-        Room room = rooms.get(roomKey);// 방이 존재하고, 고객이 해당 방의 가격을 지불할 수 있는지 확인
+    public UUID reserveRoom(String roomKey, Customer customer, String dateStr) {
+        // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보를 가져오면되유...
+        Room room = rooms.get(roomKey);
+        // "yyyy-MM-dd" 형식의 문자열 날짜를 파싱하기 위한 포맷터를 설정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // dateStr을 LocalDate 형식으로 파싱(그냥 쉽게 문자로 된 날짜를 날짜 형태로 바꾸기)
+        LocalDate inputDate = LocalDate.parse(dateStr, formatter);
+        // 현재 날짜를 가져오는 식???
+        LocalDate currentDate = LocalDate.now();
 
+        // 입력한 날짜가 현재 날짜 이전인 경우 예약 거절
+        if (inputDate.isBefore(currentDate)) {
+            System.out.println("당신은 타임머신타려고요? 지난 날짜는 예약 안되요~.");
+            return null;//거절~
+        }
+
+        // 방이 있고 고객이 돈을 지불할 수 있는 경우
         if (room != null && customer.canAfford(room.getPrice())) {
+            // 새로운 예약 ID를 생성
             UUID id = UUID.randomUUID();
-            reservations.add(new Reservation(id, room, customer, date));
-            return id;// 예약 ID 반환
-        } else {
-            return null;// 예약 불가능
 
+            // 새로운 예약을 생성하고 reservations 리스트에 추가
+            reservations.add(new Reservation(id, room, customer, dateStr));
+
+            assets += room.getPrice();      // 총 자산 업데이트
+            return id;      // 예약 ID를 반환
+
+        } else {
+            // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
+            return null;
         }
     }
 
@@ -60,5 +82,10 @@ class Hotel {
             }
         }
         return flag;
+    }
+
+    // 총 보유 자산 출력
+    public void getAssets() {
+        System.out.println(assets);
     }
 }

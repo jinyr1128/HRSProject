@@ -95,6 +95,8 @@ public class HotelReservationSystem {
                     return;
 
                 case 0: // 관리자를 위한 모든 예약 정보 출력
+                    System.out.print("총 보유 자산 : ");
+                    hotel.getAssets();
                     System.out.println("모든 예약:");
                     hotel.getAllReservations().forEach(reservation -> {
                         System.out.println("예약 ID: " + reservation.getId());
