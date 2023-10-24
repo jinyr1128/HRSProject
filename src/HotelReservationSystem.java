@@ -35,13 +35,14 @@ public class HotelReservationSystem {
                         money = inputMoneyInfo("소지 금액을 입력하세요: ", scanner);
                     } catch (InputMismatchException e) {
                         System.out.println("올바른 숫자를 입력해주세요");
-                        scanner.nextLine();
                         break;
                     }
+                    scanner.nextLine();
+
 
                     System.out.print("예약 날짜를 입력하세요 (예, 2023-10-27): ");
                     String date = scanner.nextLine();
-
+                    System.out.println("date = " + date);
                     System.out.println("해당 날짜에 예약 가능한 방은 다음과 같습니다.");
                     int i = 1;
                     for (String key : roomKeyArr) {
