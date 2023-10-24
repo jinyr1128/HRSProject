@@ -10,21 +10,16 @@ public class HotelReservationSystem {
         Scanner sc = new Scanner(System.in);// 입력을 위한 Scanner 객체 생성
         // 사용자에게 선택할 수 있는 메뉴 표시
         while (true) {
-            System.out.println("호텔 예약 시스템에 오신 것을 환영합니다!");
-            System.out.println("1. 예약하기");
-            System.out.println("2. 예약 취소하기");
-            System.out.println("3. 나의 예약 보기");
-            System.out.println("4. 종료");
-            System.out.println("0. 모든 예약 보기 (관리자)");
-            System.out.print("선택을 입력하세요: ");
+            printMenu();
 
-            int choice = sc.nextInt();
+            int choiceMenu = sc.nextInt();
             sc.nextLine();
 
             reservation:
-            switch (choice) {
+            switch (choiceMenu) {
                 case 1:// 예약하기
                     String name = inputInfo("이름을 입력하세요", sc);
+                    //아래 메소드에서 설명
                     try {
                         String phoneNum = inputPhoneInfo(sc);
                     }catch(IllegalArgumentException e){
@@ -108,7 +103,7 @@ public class HotelReservationSystem {
             System.out.println("방 타입: " + reservation.getRoom().getType());
             System.out.println("날짜: " + reservation.getDate());
             System.out.println("---------");
-        });
+        });//toSting 으로 만들기
     }
 
     private static String inputInfo(String Info, Scanner sc){
@@ -138,5 +133,16 @@ public class HotelReservationSystem {
     private static int inputMoneyInfo(String Info, Scanner sc){
         System.out.println(Info);
         return sc.nextInt();
+    }
+
+    public static void printMenu() {
+        System.out.println("호텔 예약 시스템에 오신 것을 환영합니다!");
+        System.out.println("1. 예약하기");
+        System.out.println("2. 예약 취소하기");
+        System.out.println("3. 나의 예약 보기");
+        System.out.println("4. 종료");
+        System.out.println("0. 모든 예약 보기 (관리자)");
+        System.out.print("선택을 입력하세요: ");
+
     }
 }
