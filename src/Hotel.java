@@ -20,6 +20,9 @@ class Hotel {
     }
 
     public UUID reserveRoom(String roomKey, Customer customer, String date) {
+        // [구현] 중복 예약 처리 필요 (날짜별로 한 객실당 한 고객만 예약)
+        // [구현] 객실 요금 처리 필요
+
         Room room = rooms.get(roomKey);
         if (room != null && customer.canAfford(room.getPrice())) {
             UUID id = UUID.randomUUID();
@@ -31,25 +34,17 @@ class Hotel {
     }
 
     public boolean cancelReservation(UUID id) {
+        // 예약 취소
         return reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
-    public void printRev(){
-        // 모든 예약 목록 조회
-    }
-    public Reservation findRev(){
-        // 고객의 예약 내역 조회
-        return null;
-    }
-    public void cancelRev(){
-        // 고객의 예약 취소
-    }
-
     public List<Reservation> getAllReservations() {
+        // 모든 예약 목록 조회
         return reservations;
     }
 
     public List<Reservation> getCustomerReservations(String name) {
+        // 고객의 예약 내역 조회
         List<Reservation> customerReservations = new ArrayList<>();
         for (Reservation reservation : reservations) {
             if (reservation.getCustomerName().equals(name)) {

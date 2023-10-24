@@ -33,6 +33,7 @@ public class HotelReservationSystem {
                     System.out.print("예약 날짜를 입력하세요 (예, 2023-10-27): ");
                     String date = scanner.nextLine();
 
+                    // [구현] 날짜 형식 변경 필요
                     Customer customer = new Customer(name, phoneNumber, money);
                     UUID reservationId = hotel.reserveRoom(roomKey, customer, date);
                     if (reservationId != null) {
