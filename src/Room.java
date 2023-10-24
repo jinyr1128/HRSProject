@@ -1,7 +1,7 @@
 class Room {
-    private String key;
-    private double price;
-    private String type;
+    private String key;// 방의 고유 키
+    private double price;// 객실 가격
+    private String type;// 객실 타입 (small, big, veryBig)
 
     public Room(String key, double price, String type) {
         this.key = key;
