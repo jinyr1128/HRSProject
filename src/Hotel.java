@@ -34,6 +34,17 @@ class Hotel {
         return reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
+    public void printRev(){
+        // 모든 예약 목록 조회
+    }
+    public Reservation findRev(){
+        // 고객의 예약 내역 조회
+        return null;
+    }
+    public void cancelRev(){
+        // 고객의 예약 취소
+    }
+
     public List<Reservation> getAllReservations() {
         return reservations;
     }
