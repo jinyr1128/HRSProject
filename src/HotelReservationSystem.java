@@ -1,5 +1,7 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class HotelReservationSystem {
 
@@ -19,30 +21,36 @@ public class HotelReservationSystem {
             int choice = sc.nextInt();
             sc.nextLine();
 
+            reservation:
             switch (choice) {
                 case 1:// 예약하기
                     String name = inputInfo("이름을 입력하세요", sc);
-                    String phoneNum = inputInfo("휴대폰 번호를 입력하세요", sc);
-                    // 휴대폰번호는 000-0000-0000 이 양식을 검증하는 과정이 필요하다고 생각해요.
-
-        /*          int money = inputMoneyInfo("소지 금액을 입력하세요: ", sc);
-                    코드를 치다가 든 생각인데 소지금액을 입력하라는건 너무 이상한 느낌이 드네요
-                    혹시 괜찮으시면 고객에 지갑 변수를 하나 파서
-                    지갑에 든 돈과 방 금액을 비교하는 코드를 사용해보는건 어떨까요??
-                    우선순위가 낮은 요청사항이긴 합니다.
-*/
-                    String roomKey  = inputInfo("방을 선택해주세요", sc);
-                    String reserveDate = inputInfo("예약 날짜를 입력하세요 (예, 2023-10-27): ", sc);
+                    try {
+                        String phoneNum = inputPhoneInfo(sc);
+                    }catch(IllegalArgumentException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    // 금액대신 문자를 입력하는 경우를 방지.
+                    try {
+                        int money = inputMoneyInfo("소지 금액을 입력하세요: ", sc);
+                        String roomKey  = inputInfo("방을 선택해주세요", sc);
+                        String reserveDate = inputInfo("예약 날짜를 입력하세요 (예, 2023-10-27): ", sc);
+                    } catch (InputMismatchException e) {
+                        System.out.println("올바른 숫자를 입력해주세요");
+                        sc.nextLine();
+                        break;
+                    }
 
                     // [구현] 날짜 형식 변경 필요
-                    Customer customer = new Customer(name, phoneNumber, money);
-                    // 예약 시도 및 결과 출력
-                    UUID reservationId = hotel.reserveRoom(roomKey, customer, date);
-                    if (reservationId != null) {
-                        System.out.println("예약 성공! 예약 ID는 다음과 같습니다: " + reservationId);
-                    } else {
-                        System.out.println("예약 실패!");
-                    }
+//                    Customer customer = new Customer(name, phoneNumber, money);
+//                    // 예약 시도 및 결과 출력
+//                    UUID reservationId = hotel.reserveRoom(roomKey, customer, date);
+//                    if (reservationId != null) {
+//                        System.out.println("예약 성공! 예약 ID는 다음과 같습니다: " + reservationId);
+//                    } else {
+//                        System.out.println("예약 실패!");
+//                    }
                     break;
 
                 case 2:// 예약 취소하기
@@ -76,15 +84,7 @@ public class HotelReservationSystem {
                     return;
 
                 case 0: // 관리자를 위한 모든 예약 정보 출력
-                    System.out.println("모든 예약:");
-                    hotel.getAllReservations().forEach(reservation -> {
-                        System.out.println("예약 ID: " + reservation.getId());
-                        System.out.println("고객 이름: " + reservation.getCustomerName());
-                        System.out.println("전화번호: " + reservation.getPhoneNumber());
-                        System.out.println("방 타입: " + reservation.getRoom().getType());
-                        System.out.println("날짜: " + reservation.getDate());
-                        System.out.println("---------");
-                    });
+                    allReservationList(hotel);
                     break; // 모든 예약 정보 출력
                 default:
                     System.out.println("잘못된 선택입니다!");
@@ -92,12 +92,51 @@ public class HotelReservationSystem {
             }
         }
     }
+
+
+
+
+    private static void allReservationList(Hotel hotel) {
+        System.out.println("모든 예약:");
+        if(hotel.getAllReservations().isEmpty()){
+            System.out.println("현재 예약이 없습니다.");
+        }
+        hotel.getAllReservations().forEach(reservation -> {
+            System.out.println("예약 ID: " + reservation.getId());
+            System.out.println("고객 이름: " + reservation.getCustomerName());
+            System.out.println("전화번호: " + reservation.getPhoneNumber());
+            System.out.println("방 타입: " + reservation.getRoom().getType());
+            System.out.println("날짜: " + reservation.getDate());
+            System.out.println("---------");
+        });
+    }
+
     private static String inputInfo(String Info, Scanner sc){
         System.out.println(Info);
         return sc.nextLine();
     }
-//    private static double inputMoneyInfo(int Info, Scanner sc){
-//        System.out.println(Info);
-//        return sc.nextInt();
-//    }    소지금액 입력 메소드지만  바뀐다면 삭제해야하기 때문에 일단 주석처리해뒀습니다.
+
+    /*
+    튜터님께서 정규화를 생성자에서 받아오는 것보다 메인에서 메소드를 따로 파서 이것을 활용하는게 좋다고 하셔서 따로 팠습니다.
+    return null  break 등 여러 방법을 써봤는데  휴대폰번호 형식을 틀려도 계속 다음 스위치문이 이어져서
+    정규화된 000-0000-0000 형식과 sc에서 입력된 휴대폰번호 형식이 다를 경우
+    에러를 생성해서 catch문에서 break하는 형식으로 사용했습니다.
+     */
+    private static String inputPhoneInfo(Scanner sc) throws IllegalArgumentException {
+        System.out.println("휴대폰 번호를 입력하세요");
+
+        //정규화 추가    휴대폰 형식이 000-0000-0000이 아니면 입력이 불가능
+//        String regexPhoneNum = " ^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
+        String regexPhoneNum = "^010-[0-9]{4}-[0-9]{4}$";
+        String checkPhoneNum = sc.nextLine();
+        if (!Pattern.matches(regexPhoneNum, checkPhoneNum)) {
+            throw new IllegalArgumentException("휴대폰 번호 형식이 일치하지 않습니다.");
+        }else{
+            return checkPhoneNum;
+        }
+    }
+    private static int inputMoneyInfo(String Info, Scanner sc){
+        System.out.println(Info);
+        return sc.nextInt();
+    }
 }
