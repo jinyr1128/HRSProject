@@ -1,10 +1,10 @@
 import java.util.UUID;
 
 class Reservation {
-    private UUID id;
-    private Room room;
-    private Customer customer;
-    private String date;
+    private UUID id;// 예약 ID
+    private Room room;// 예약된 방 정보
+    private Customer customer;// 예약한 고객 정보
+    private String date;// 예약 날짜
 
     public Reservation(UUID id, Room room, Customer customer, String date) {
         this.id = id;
