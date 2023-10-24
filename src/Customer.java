@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 
 class Customer {
     private String name;// 고객 이름
-    private String phoneNumber="";// 전화번호
+    private String phoneNumber;// 전화번호
     private int money; // 고객이 가진 돈
 
     public Customer(String name, String phoneNumber, int money) {
