@@ -1,32 +1,34 @@
-# `(YULL's CAFE)` Kiosk Project
-## Introduction
-<span style="font-size: 16px;">이 프로젝트는 카페 키오스크를 가상으로 구현한 자바 기반의 프로그램입니다.<br> 
-사용자는 키오스크에서 메뉴를 확인하고, 원하는 상품을 장바구니에 선택해서 담아 결제할 수 있습니다.</span>
+# Hotel Reservation System 
+## Hotel Reservation System Project
+### Introduction
+<span style="font-size: 18px;">이 프로젝트는 호텔 예약 시스템을 가상으로 구현한 자바 기반의 프로그램입니다. 이 시스템은 현대 호텔에서 흔히 볼 수 있는 예약 플랫폼의 핵심 기능들을 디지털 환경에서 재현합니다.원하는 객실 유형과 날짜를 선택한 후, 필요한 개인 정보(이름, 연락처 등)를 입력하여 객실을 예약하고 결제할 수 있습니다. </span>
 
-## Project Details 
- ### 개발 언어: Java!!!!!![Java.jpeg](src%2Fimg%2FJava.jpeg)
+### Project Details
+### 개발 언어: Java!!!!!!![Java.jpeg](src%2Fimg%2FJava.jpeg)
+### 개발 환경: IntelliJ!!!!!!!!!! ![인텔리제이.png](src%2Fimg%2F%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%9C%EC%9D%B4.png)
+## 주요 클래스
+##### Room: 호텔의 각 객실에 대한 정보와 특성을 보여주는 클래스입니다!!!<br>
+##### Hotel: 호텔의 전반적인 정보와 보유한 객실, 예약 상황을 관리하는 클래스입니다.<br>
+##### HotelReservationSystem: 전체 예약 시스템의 메인 동작을 관리하는 핵심 클래스입니다...<br>
+##### Reservation: 사용자의 예약 정보와 관련된 모든 내용을 처리합니다.<br>
+##### Customer: 고객의 개인 정보 및 예약 내역을 관리합니다.<br>
+### Project Motivation
+<span style="font-size: 18px;">이 프로젝트는 '내일 배움 캠프'의 자바 언어 주간 팀 프로젝트로 시작하게 되었습니다.
+<br>호텔 예약 시스템의 핵심 기능을 가상으로 구현하면서,
+<br>실제 비즈니스 환경에서의 프로그래밍 경험을 얻고자 시작하였습니다.
+<br>팀원들과의 협업을 통해 여러 도전과 문제를 해결하며 프로젝트를 완성하였습니다.
+<br>(ft.깃은 아직 어렵다)</span>
 
- ### 개발 환경:IntelliJ!!!!!!!!!! ![인텔리제이.png](src%2Fimg%2F%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%9C%EC%9D%B4.png)
-### 주요 클래스
-#### Menu: 사용자에게 제공되는 다양한 카페 메뉴를 보여주려고 만들어둔 클래스이다!!!
-#### Order: 사용자가 선택한 상품들의 주문 정보를 관리하며 가격합계도 여기서 뚱땅뚱땅 나온다.
-#### Product: 카페의 각 상품에 대한 정보를 가지고 있는 클래스이다...
-## Project Motivation
-<span style="font-size: 16px;">이 프로젝트는 '내일 배움 캠프'의 자바 언어 주간 개인 과제로 시작하게 되었습니다. 
-<br>실생활에서 자주 볼 수 있는 카페 키오스크의 기능을 가상으로 구현하여,
-<br>실제 비즈니스 환경에서의 프로그래밍 경험을 얻자라는 당찬 포부와 함께 시작하여!!
-<br>하얗게 산화되며 마무리를 헀습니다.</span>
+### How to Run
+<span style="font-size: 16px;">
+1. IntelliJ를 실행합니다.<br>
+2. 위의 코드들을 실행하기위해 코드를 사용합니다.<br></span>
 
-## How to Run
-<span style="font-size: 16px;">1.IntelliJ 를 실행합니다.<br>
-2.위의 코드들을 복사하여 IntelliJ 프로젝트에 붙여넣기 합니다.<br>
-3.Kiosk 클래스에서 main 메서드를 실행하여 프로그램을 시작합니다.<br>
-
-![스크린샷 2023-10-19 오후 3.12.38.png](src%2Fimg%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-10-19%20%EC%98%A4%ED%9B%84%203.12.38.png)<br>
-<span style="font-size: 20px;"><br>그러면 위 이미지처럼 나올것입니다!!!<br><br>
-4.콘솔 창에서 메뉴를 선택하여 입력!!!그 뒤 원하는 상품을 장바구니에 담고 결제합니다.<br></span>
-## Conclusion
-<span style="font-size: 16px;">이 프로젝트를 통해 실제 카페 키오스크의 주문 및 결제 시스템의 기본적인 동작들을 이해하고 구현하며 작동 원리를 이해했습니다.
-<br> 더 많은 기능과 UI/UX 개선과 많은 피드백을 통해 사용자가 원하는 기능을 잘 구성하며 <br>
-사용자에게 친화적인 키오스크를 만들 수 있을 것입니다.</span>
+`HotelReservationSystem` 클래스에서 main 메서드를 실행하여 프로그램을 시작합니다.<br>
+<br>
+<span style="font-size: 20px;">콘솔 창에서 원하는 객실을 선택하여 입력 후, 예약 및 결제를 진행합니다.<br></span>
+Conclusion
+<span style="font-size: 18px;">이 프로젝트를 통해 호텔 예약 시스템의 주요 기능과 동작 원리를 깊게 이해하게 되었습니다.
+<br> 앞으로 더 많은 기능 추가와 UI/UX 향상을 위한 개선 작업이 필요하며,
+<br>사용자의 피드백을 반영하여 더 향상된 호텔 예약 시스템을 만들어 나갈 것입니다.</span>
 

@@ -1,12 +1,10 @@
 class Room {
-    private String key;// 방의 고유 키
-    private int price;// 객실 가격
-    private String type;// 객실 타입 (small, big, veryBig)
+    private String key;     // 방의 고유 키 (이름)
+    private int price;      // 객실 가격
 
-    public Room(String key, int price, String type) {
+    public Room(String key, int price) {
         this.key = key;
         this.price = price;
-        this.type = type;
     }
 
     public String getKey() {
@@ -15,9 +13,5 @@ class Room {
 
     public int getPrice() {
         return price;
-    }
-
-    public String getType() {
-        return type;
     }
 }
