@@ -53,7 +53,7 @@ class Hotel {
         int i = 1;
         Room room = null;
 
-        if(roomCount > rooms.size() || roomKey < 1){           // 다른 번호 입력시
+        if(roomKey > roomCount || roomKey < 1){           // 다른 번호 입력시
             return null;
         }
 
