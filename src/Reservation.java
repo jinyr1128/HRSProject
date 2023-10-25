@@ -12,6 +12,15 @@ class Reservation {
         this.customer = customer;
         this.date = date;
     }
+
+    @Override
+    public String toString(){
+        return "\n예약 ID: " + this.id +
+                "\n고객 이름: " + this.getCustomerName() +
+                "\n전화번호: " + this.getPhoneNumber() +
+                "\n방 타입: " + this.room.getType() +
+                "\n날짜: " + this.getDate();
+    }
     public UUID getId() {
         return id;
     }

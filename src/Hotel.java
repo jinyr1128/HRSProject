@@ -55,6 +55,12 @@ class Hotel {
     }
 
     public boolean cancelReservation(UUID id) { // 주어진 id와 일치하는 예약을 찾아 삭제
+        for (Reservation reservation : reservations) {
+            if (reservation.getId().equals(id)) {
+                double p = reservation.getRoom().getPrice();
+                assets -= p;                    // 객실 가격을 찾아 총 자산에서 차감
+            }
+        }                                       
         return reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
@@ -74,7 +80,6 @@ class Hotel {
 
     // 해당 날짜에 key 방이 예약 되어 있는지 확인
     public static boolean checkRooms(String key, String date){
-
         boolean flag = true;
         for(Reservation r : reservations){                                          // 전체 예약 목록 순회
             if(r.getRoom().getKey().equals(key) && r.getDate().equals(date)){       // 해당 날짜(date)에 (key)방이 이미 예약되었는지 확인

@@ -19,10 +19,6 @@ class Customer {
         return phoneNumber;
     }
 
-    public int getMoney() {
-        return money;
-    }
-
     // 해당 가격을 지불할 수 있는지 확인하는 메소드
     public boolean canAfford(int price) {
         return money >= price;
