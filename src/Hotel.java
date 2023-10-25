@@ -20,6 +20,7 @@ class Hotel {
         rooms.put("Suite Twin", new Room("Suite Twin", 200));
         rooms.put("Suite Double", new Room("Suite Double", 200));
     }
+
     // 방 예약 메소드
     public UUID reserveRoom(Room room, Customer customer, String dateStr) {
 
@@ -49,22 +50,24 @@ class Hotel {
             return null;
         }
     }
-    public Room findRoom(int roomCount, int roomKey){        // 객실 번호로 객실 찾아 반환
+
+    public Room findRoom(int roomCount, int roomKey) {        // 객실 번호로 객실 찾아 반환
         int i = 1;
         Room room = null;
 
-        if(roomKey > roomCount || roomKey < 1){           // 다른 번호 입력시
+        if (roomKey > roomCount || roomKey < 1) {           // 다른 번호 입력시
             return null;
         }
 
-        for(String key : rooms.keySet()){       // 방 번호로 키를 찾기 위해 map 탐색
-            if(i++ == roomKey){
+        for (String key : rooms.keySet()) {       // 방 번호로 키를 찾기 위해 map 탐색
+            if (i++ == roomKey) {
                 room = rooms.get(key);          // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보 반환
                 break;
             }
         }
         return room;
     }
+
     public int getRoomPrice(String roomKey) {
         Room room = rooms.get(roomKey);
         if (room != null) {
@@ -79,7 +82,7 @@ class Hotel {
                 double p = reservation.getRoom().getPrice();
                 assets -= p;                    // 객실 가격을 찾아 총 자산에서 차감
             }
-        }                                       
+        }
         return reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
@@ -87,6 +90,7 @@ class Hotel {
     public List<Reservation> getAllReservations() {
         return reservations;
     }
+
     // 특정 고객의 예약 정보 반환 메소드
     public Reservation getCustomerReservations(UUID id) {
         for (Reservation reservation : reservations) {
@@ -98,10 +102,10 @@ class Hotel {
     }
 
     // 해당 날짜에 key 방이 예약 되어 있는지 확인
-    public static boolean checkRooms(String key, String date){
+    public static boolean checkRooms(String key, String date) {
         boolean flag = true;
-        for(Reservation r : reservations){                                          // 전체 예약 목록 순회
-            if(r.getRoom().getKey().equals(key) && r.getDate().equals(date)){       // 해당 날짜(date)에 (key)방이 이미 예약되었는지 확인
+        for (Reservation r : reservations) {                                          // 전체 예약 목록 순회
+            if (r.getRoom().getKey().equals(key) && r.getDate().equals(date)) {       // 해당 날짜(date)에 (key)방이 이미 예약되었는지 확인
                 flag = false;                                                       // 예약이 되어 있으므로 예약 불가 (false return)
             }
         }
