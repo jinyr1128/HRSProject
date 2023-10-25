@@ -59,6 +59,8 @@ public class HotelReservationSystem {
             String phoneNumber = inputPhoneInfo(sc);
             int money = inputMoneyInfo(sc);
             sc.nextLine();
+            CalenderBook cal = new CalenderBook(); // 달력 추가
+            cal.printCalender();
             String date = inputDateInfo(sc);
             int roomCount = printRooms(sc, hotel, date);        // 예약 가능한 객실 리스트 출력, 객실 개수 반환
             System.out.print("방을 선택해주세요: ");
