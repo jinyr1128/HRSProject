@@ -55,6 +55,14 @@ class Hotel {
     }
 
     public boolean cancelReservation(UUID id) { // 주어진 id와 일치하는 예약을 찾아 삭제
+
+        for (Reservation reservation : reservations) {
+            if (reservation.getId().equals(id)) {
+                double p = reservation.getRoom().getPrice();
+                assets -= p;
+            }
+        }                                       // 주어진 id와 일치하는 예약 정보의 방 가격을 찾아 총 자산에서 차감
+
         return reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
