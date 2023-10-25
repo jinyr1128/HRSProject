@@ -5,8 +5,8 @@ import java.util.UUID;
 public class HotelReservationSystem {
 
     public static void main(String[] args) {
-        Hotel hotel = new Hotel();// 호텔 객체 생성
-        Scanner scanner = new Scanner(System.in);// 입력을 위한 Scanner 객체 생성
+        Hotel hotel = new Hotel();                  // 호텔 객체 생성
+        Scanner scanner = new Scanner(System.in);   // 입력을 위한 Scanner 객체 생성
         String[] roomKeyArr = {"small1", "small2", "big1", "big2", "veryBig1", "veryBig2"};
 
         // 사용자에게 선택할 수 있는 메뉴 표시
@@ -23,7 +23,7 @@ public class HotelReservationSystem {
             scanner.nextLine();
 
             switch (choice) {
-                case 1:// 예약하기
+                case 1:         // 예약하기
                     System.out.print("이름을 입력하세요: ");
                     String name = scanner.nextLine();
                     System.out.print("전화번호를 입력하세요: ");

@@ -3,12 +3,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 class Hotel {
-    private double assets;// 호텔의 보유 자산(환불이나 뭐 이런저런 일을 위해서 만들어둔것입니다 별 필요없어 보이긴해요)
-    private Map<String, Room> rooms;// 방들의 정보 (방키로 방에 접근)키에 따라 호텔의 각 방에 대한 정보를 저장
-    private static List<Reservation> reservations;// 예약 리스트
+    private double assets;                          // 호텔 보유 자산
+    private Map<String, Room> rooms;                // 객실 정보 (방키로 방에 접근)키에 따라 호텔의 각 방에 대한 정보를 저장
+    private static List<Reservation> reservations;  // 예약 리스트
 
     public Hotel() {
-        this.assets = 10000;// 기본 자산 10000 설정
+        this.assets = 10000;                        // 기본 자산 10000 설정
         this.rooms = new HashMap<>();
         this.reservations = new ArrayList<>();
 
@@ -33,8 +33,8 @@ class Hotel {
 
         // 입력한 날짜가 현재 날짜 이전인 경우 예약 거절
         if (inputDate.isBefore(currentDate)) {
-            System.out.println("당신은 타임머신타려고요? 지난 날짜는 예약 안되요~.");
-            return null;//거절~
+            System.out.println("당신은 타임머신타려고요? 지난 날짜는 예약 안돼요~.");
+            return null;        //거절~
         }
 
         // 방이 있고 고객이 돈을 지불할 수 있는 경우
@@ -46,7 +46,7 @@ class Hotel {
             reservations.add(new Reservation(id, room, customer, dateStr));
 
             assets += room.getPrice();      // 총 자산 업데이트
-            return id;      // 예약 ID를 반환
+            return id;                      // 예약 ID를 반환
 
         } else {
             // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
@@ -72,8 +72,8 @@ class Hotel {
         return null;
     }
 
+    // 해당 날짜에 key 방이 예약 되어 있는지 확인
     public static boolean checkRooms(String key, String date){
-        // 해당 날짜에 key 방이 예약 되어 있는지 확인
 
         boolean flag = true;
         for(Reservation r : reservations){                                          // 전체 예약 목록 순회
