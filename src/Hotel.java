@@ -91,6 +91,10 @@ class Hotel {
         }
         return flag;
     }
+    public String[] roomKeySet(){    // 메인에서 예약시 roomkey값 검증하는 배열입니다.
+        String[] roomKeySet = rooms.keySet().toArray(new String[6]);
+        return roomKeySet;
+    }
 
     // 총 보유 자산 출력
     public void getAssets() {
