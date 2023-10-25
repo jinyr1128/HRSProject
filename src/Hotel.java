@@ -13,23 +13,19 @@ class Hotel {
         this.reservations = new ArrayList<>();
 
         // 방 정보 초기화
-        rooms.put("small1", new Room("small1", 50, "small"));
-        rooms.put("small2", new Room("small2", 50, "small"));
-        rooms.put("big1", new Room("big1", 100, "big"));
-        rooms.put("big2", new Room("big2", 100, "big"));
-        rooms.put("veryBig1", new Room("veryBig1", 200, "veryBig"));
-        rooms.put("veryBig2", new Room("veryBig2", 200, "veryBig"));
+        rooms.put("Deluxe Twin", new Room("Deluxe Twin", 50, "small"));
+        rooms.put("Deluxe Double", new Room("Deluxe Double", 50, "small"));
+        rooms.put("Premier Twin", new Room("Premier Twin", 100, "big"));
+        rooms.put("Premier Double", new Room("Premier Double", 100, "big"));
+        rooms.put("Suite Twin", new Room("Suite Twin", 200, "veryBig"));
+        rooms.put("Suite Double", new Room("Suite Double", 200, "veryBig"));
     }
     // 방 예약 메소드
     public UUID reserveRoom(String roomKey, Customer customer, String dateStr) {
-        // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보를 가져오면되유...
-        Room room = rooms.get(roomKey);
-        // "yyyy-MM-dd" 형식의 문자열 날짜를 파싱하기 위한 포맷터를 설정
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // dateStr을 LocalDate 형식으로 파싱(그냥 쉽게 문자로 된 날짜를 날짜 형태로 바꾸기)
-        LocalDate inputDate = LocalDate.parse(dateStr, formatter);
-        // 현재 날짜를 가져오는 식???
-        LocalDate currentDate = LocalDate.now();
+        Room room = rooms.get(roomKey);        // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보를 가져오면되유...
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // "yyyy-MM-dd" 형식의 문자열 날짜를 파싱하기 위한 포맷터를 설정
+        LocalDate inputDate = LocalDate.parse(dateStr, formatter);        // dateStr을 LocalDate 형식으로 파싱(그냥 쉽게 문자로 된 날짜를 날짜 형태로 바꾸기)
+        LocalDate currentDate = LocalDate.now();        // 현재 날짜를 가져오는 식???
 
         // 입력한 날짜가 현재 날짜 이전인 경우 예약 거절
         if (inputDate.isBefore(currentDate)) {
@@ -52,6 +48,13 @@ class Hotel {
             // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
             return null;
         }
+    }
+    public int getRoomPrice(String roomKey) {
+        Room room = rooms.get(roomKey);
+        if (room != null) {
+            return room.getPrice();
+        }
+        return -1;
     }
 
     public boolean cancelReservation(UUID id) { // 주어진 id와 일치하는 예약을 찾아 삭제
