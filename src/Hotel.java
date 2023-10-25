@@ -9,20 +9,20 @@ class Hotel {
 
     public Hotel() {
         this.assets = 10000;                        // 기본 자산 10000 설정
-        this.rooms = new HashMap<>();
+        this.rooms = new LinkedHashMap<>();
         this.reservations = new ArrayList<>();
 
         // 방 정보 초기화
-        rooms.put("Deluxe Twin", new Room("Deluxe Twin", 50, "small"));
-        rooms.put("Deluxe Double", new Room("Deluxe Double", 50, "small"));
-        rooms.put("Premier Twin", new Room("Premier Twin", 100, "big"));
-        rooms.put("Premier Double", new Room("Premier Double", 100, "big"));
-        rooms.put("Suite Twin", new Room("Suite Twin", 200, "veryBig"));
-        rooms.put("Suite Double", new Room("Suite Double", 200, "veryBig"));
+        rooms.put("Deluxe Twin", new Room("Deluxe Twin", 50));
+        rooms.put("Deluxe Double", new Room("Deluxe Double", 50));
+        rooms.put("Premier Twin", new Room("Premier Twin", 100));
+        rooms.put("Premier Double", new Room("Premier Double", 100));
+        rooms.put("Suite Twin", new Room("Suite Twin", 200));
+        rooms.put("Suite Double", new Room("Suite Double", 200));
     }
     // 방 예약 메소드
-    public UUID reserveRoom(String roomKey, Customer customer, String dateStr) {
-        Room room = rooms.get(roomKey);        // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보를 가져오면되유...
+    public UUID reserveRoom(Room room, Customer customer, String dateStr) {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // "yyyy-MM-dd" 형식의 문자열 날짜를 파싱하기 위한 포맷터를 설정
         LocalDate inputDate = LocalDate.parse(dateStr, formatter);        // dateStr을 LocalDate 형식으로 파싱(그냥 쉽게 문자로 된 날짜를 날짜 형태로 바꾸기)
         LocalDate currentDate = LocalDate.now();        // 현재 날짜를 가져오는 식???
@@ -48,6 +48,22 @@ class Hotel {
             // 조건을 만족하지 못하는 경우 예약을 거절하고 null을 반환
             return null;
         }
+    }
+    public Room findRoom(int roomCount, int roomKey){        // 객실 번호로 객실 찾아 반환
+        int i = 1;
+        Room room = null;
+
+        if(roomCount > rooms.size() || roomKey < 1){           // 다른 번호 입력시
+            return null;
+        }
+
+        for(String key : rooms.keySet()){       // 방 번호로 키를 찾기 위해 map 탐색
+            if(i++ == roomKey){
+                room = rooms.get(key);          // 방의 키를 사용하여 rooms 맵에서 해당 방의 정보 반환
+                break;
+            }
+        }
+        return room;
     }
     public int getRoomPrice(String roomKey) {
         Room room = rooms.get(roomKey);

@@ -60,13 +60,19 @@ public class HotelReservationSystem {
             int money = inputMoneyInfo(sc);
             sc.nextLine();
             String date = inputDateInfo(sc);
-            printRooms(sc, hotel, date);// hotel 인스턴스 전달
-            String roomKey = inputInfo("방 키를 입력하세요: ", sc);
+            int roomCount = printRooms(sc, hotel, date);        // 예약 가능한 객실 리스트 출력, 객실 개수 반환
+            System.out.print("방을 선택해주세요: ");
+            int roomKey = sc.nextInt();
+            sc.nextLine();
+            Room room = hotel.findRoom(roomCount, roomKey);      // 객실 번호로 객실 찾아 저장
+            if(room == null){
+                System.out.println("잘못된 입력 입니다.");
+            }
 
             Customer customer = new Customer(name, phoneNumber, money);
 
             // 예약 시도 및 결과 출력
-            UUID reservationId = hotel.reserveRoom(roomKey, customer, date);
+            UUID reservationId = hotel.reserveRoom(room, customer, date);
             if (reservationId != null) {
                 System.out.println("예약 성공! 예약 ID는 다음과 같습니다: " + reservationId);
             } else {
@@ -103,7 +109,7 @@ public class HotelReservationSystem {
             System.out.print("총 보유 자산 : ");
             hotel.getAssets();
 
-            System.out.println("[ 모든 예약 ]\n");
+            System.out.println("[ 모든 예약 ]");
             if (hotel.getAllReservations().isEmpty()) {
                 System.out.println("현재 예약이 없습니다.");
             }
@@ -160,7 +166,8 @@ public class HotelReservationSystem {
                 }
             }
         }
-        private static void printRooms (Scanner sc, Hotel hotel, String date){           // 예약 가능한 객실 list 출력
+
+        private static int printRooms (Scanner sc, Hotel hotel, String date){           // 예약 가능한 객실 list 출력
             String[] roomKeyArr = {"Deluxe Twin", "Deluxe Double", "Premier Twin", "Premier Double", "Suite Twin", "Suite Double"};
 
             System.out.println("해당 날짜에 예약 가능한 방은 다음과 같습니다.");
@@ -177,5 +184,7 @@ public class HotelReservationSystem {
                 date = inputInfo("다른 날짜를 입력하세요 (예, 2023-11-01): ", sc);  // 날짜를 다시 입력받음
                 printRooms(sc, hotel, date);
             }
+
+            return i;
         }
     }
