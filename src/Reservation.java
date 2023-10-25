@@ -18,7 +18,7 @@ class Reservation {
         return "\n예약 ID: " + this.id +
                 "\n고객 이름: " + this.getCustomerName() +
                 "\n전화번호: " + this.getPhoneNumber() +
-                "\n방 타입: " + this.room.getType() +
+                "\n방 타입: " + this.room.getKey() +
                 "\n날짜: " + this.getDate();
     }
     public UUID getId() {
