@@ -120,28 +120,25 @@ public class HotelReservationSystem {
 
     private static void findReservation(Scanner sc, Hotel hotel) {
         System.out.println("\n----------------------------------\n");
-//        System.out.print("조회할 예약 ID를 입력하세요: ");
-
         while (true) {
             try {
-                String rev_id = inputInfo("조회할 예약 ID를 입력하세요: ", sc);
+                String rev_id = inputInfo("조회할 예약 ID를 입력하세요 (메인메뉴로 돌아가려면 9를 입력하세요): ", sc);
+
+                // 메인 메뉴로 돌아가기를 원하는 경우
+                if (rev_id.equals("9")) {
+                    System.out.println("메인메뉴로 돌아갑니다.");
+                    return;
+                }
+
                 Reservation customerRev = hotel.getCustomerReservations(rev_id);        // 조회된 고객 Reservation 객체 반환
                 if (customerRev == null) {                                               // 반환된 객체가 없을 경우 잘못된 입력
-                    System.out.println("잘못된 입력입니다.");
+                    System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
                 } else {                                                                // 있을 경우 출력
                     System.out.println(customerRev.toString());
                     break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
-                System.out.println("메인메뉴로 돌아가시려면 9번을 눌러주세요.");
-
-                String num = sc.nextLine();
-                if (num.equals("9")) {
-                    System.out.println("메인메뉴로 돌아갑니다.");
-                    sc.nextLine();
-                    break;
-                }
             }
         }
     }
