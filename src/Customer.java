@@ -1,4 +1,4 @@
-import java.util.regex.Pattern;
+
 
 class Customer {
     private String name;        // 고객 이름
