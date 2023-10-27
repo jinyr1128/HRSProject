@@ -96,23 +96,23 @@ public class HotelReservationSystem {
 
     private static void cancelReservation(Scanner sc, Hotel hotel) {
         System.out.println("\n----------------------------------\n");
-        String id = inputInfo("취소할 예약 ID를 입력하세요: ", sc);
         while(true) {
+            String id = inputInfo("취소할 예약 ID를 입력하세요: ", sc);
+            if (id.equals("9")) {
+                System.out.println("메인메뉴로 돌아갑니다.");
+                break;
+            }
             try {
                 boolean canceled = hotel.cancelReservation(UUID.fromString(id));
                 if (canceled) {
                     System.out.println("예약이 성공적으로 취소되었습니다!");
-                } else {
+                    break;
+                }  else {
                     System.out.println("예약 취소에 실패했습니다!");
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("올바른 ID가 아닙니다. 다시 입력해주세요. \n(메인메뉴로 돌아가기는 9번을 눌러주세요.)");
-                int escapeNum = sc.nextInt();
-                if (escapeNum == 9) {
-                    System.out.println("메인메뉴로 돌아갑니다.");
-                    sc.nextLine();
-                    break;
-                }
+                System.out.println("올바른 ID가 아닙니다. 엔터를 누른 후 다시 입력해주세요.");
+                System.out.println("메인메뉴로 돌아가시려면 엔터를 누른 후 9번을 눌러주세요.");
                 sc.nextLine();
             }
         }
@@ -120,21 +120,24 @@ public class HotelReservationSystem {
 
     private static void findReservation(Scanner sc, Hotel hotel) {
         System.out.println("\n----------------------------------\n");
-        System.out.print("조회할 예약 ID를 입력하세요: ");
+//        System.out.print("조회할 예약 ID를 입력하세요: ");
 
         while (true) {
             try {
-                UUID rev_id = UUID.fromString(sc.nextLine());
+                String rev_id = inputInfo("조회할 예약 ID를 입력하세요: ", sc);
                 Reservation customerRev = hotel.getCustomerReservations(rev_id);        // 조회된 고객 Reservation 객체 반환
                 if (customerRev == null) {                                               // 반환된 객체가 없을 경우 잘못된 입력
                     System.out.println("잘못된 입력입니다.");
                 } else {                                                                // 있을 경우 출력
                     System.out.println(customerRev.toString());
+                    break;
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("올바른 ID가 아닙니다. 다시 입력해주세요. \n(메인메뉴로 돌아가기는 9번을 눌러주세요.)");
-                int escapeNum = sc.nextInt();
-                if (escapeNum == 9) {
+                System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+                System.out.println("메인메뉴로 돌아가시려면 9번을 눌러주세요.");
+
+                String num = sc.nextLine();
+                if (num.equals("9")) {
                     System.out.println("메인메뉴로 돌아갑니다.");
                     sc.nextLine();
                     break;
@@ -201,7 +204,7 @@ public class HotelReservationSystem {
                 }
                 return inputDate;
             } catch (DateTimeParseException e) {
-                System.out.print("날짜 형식이 일치하지 않습니다. 다시 입력해주세요 (예, 2023-11-01): ");
+                System.out.print("날짜 형식이 일치하지 않습니다. 다시 ");
             }
         }
     }
