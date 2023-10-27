@@ -14,8 +14,7 @@ public class HotelReservationSystem {
         while (true) {
             printMenu();
 
-            int choiceMenu = scanner.nextInt();                 // 메뉴 선택
-            scanner.nextLine();
+            int choiceMenu = getChoiceMenu(scanner);
 
             switch (choiceMenu) {
                 case 1 -> bookRoom(scanner, hotel);             // 객실 예약하기
@@ -27,7 +26,13 @@ public class HotelReservationSystem {
                     return;
                 }
                 case 0 -> allReservationList(hotel);            // 모든 예약 정보 출력
-                default -> System.out.println("잘못된 선택입니다!");
+                default -> System.out.println("올바른 메뉴 번호를 입력해주세요!");
+
+            }
+            try {
+                Thread.sleep(1 * 1500);
+            } catch (InterruptedException e) {
+                System.out.println();
             }
         }
     }
@@ -37,17 +42,26 @@ public class HotelReservationSystem {
         System.out.println("     AAA Hotel에 오신 것을 환영합니다!");
         System.out.println("=".repeat(40));         // '====...====' 패턴으로 하단 테두리 추가
         System.out.println();
-        System.out.println("1. 예약하기       - 호텔의 빈 방을 예약할건데 굉장히 환영해요");
-        System.out.println();
-        System.out.println("2. 예약 취소하기   - 이미 예약한 방을 취소하시려고요...?");
-        System.out.println();
-        System.out.println("3. 나의 예약 보기  - 예약 정보는 확인하셔야죠?");
-        System.out.println();
-        System.out.println("4. 종료            - 시스템을 종료합니다.");
-        System.out.println();
-        System.out.println("0. 모든 예약 보기 (관리자) - 와서 뭐하시려고요...?");
-        System.out.println();
+        System.out.println("1. 예약하기       - 호텔의 빈 방을 예약할건데 굉장히 환영해요\n");
+        System.out.println("2. 예약 취소하기   - 이미 예약한 방을 취소하시려고요...?\n");
+        System.out.println("3. 나의 예약 보기  - 예약 정보는 확인하셔야죠?\n");
+        System.out.println("4. 종료            - 시스템을 종료합니다.\n");
+        System.out.println("0. 모든 예약 보기 (관리자) - 와서 뭐하시려고요...?\n");
         System.out.print("원하는 번호를 선택해주세요: ");
+    }
+
+    private static int getChoiceMenu(Scanner scanner) {
+        while (true) {
+
+            if (scanner.hasNextInt()) {
+                int choiceMenu = scanner.nextInt();                 // 메뉴 선택
+                scanner.nextLine();
+                return choiceMenu;
+            } else {
+                System.out.println("숫자를 입력해주세요.");
+                scanner.nextLine();
+            }
+        }
     }
 
     private static void bookRoom(Scanner sc, Hotel hotel) {
@@ -83,25 +97,49 @@ public class HotelReservationSystem {
     private static void cancelReservation(Scanner sc, Hotel hotel) {
         System.out.println("\n----------------------------------\n");
         String id = inputInfo("취소할 예약 ID를 입력하세요: ", sc);
-
-        boolean canceled = hotel.cancelReservation(UUID.fromString(id));
-        if (canceled) {
-            System.out.println("예약이 성공적으로 취소되었습니다!");
-        } else {
-            System.out.println("예약 취소에 실패했습니다!");
+        while(true) {
+            try {
+                boolean canceled = hotel.cancelReservation(UUID.fromString(id));
+                if (canceled) {
+                    System.out.println("예약이 성공적으로 취소되었습니다!");
+                } else {
+                    System.out.println("예약 취소에 실패했습니다!");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("올바른 ID가 아닙니다. 다시 입력해주세요. \n(메인메뉴로 돌아가기는 9번을 눌러주세요.)");
+                int escapeNum = sc.nextInt();
+                if (escapeNum == 9) {
+                    System.out.println("메인메뉴로 돌아갑니다.");
+                    sc.nextLine();
+                    break;
+                }
+                sc.nextLine();
+            }
         }
     }
 
     private static void findReservation(Scanner sc, Hotel hotel) {
         System.out.println("\n----------------------------------\n");
         System.out.print("조회할 예약 ID를 입력하세요: ");
-        UUID rev_id = UUID.fromString(sc.nextLine());
 
-        Reservation customerRev = hotel.getCustomerReservations(rev_id);        // 조회된 고객 Reservation 객체 반환
-        if (customerRev == null) {                                               // 반환된 객체가 없을 경우 잘못된 입력
-            System.out.println("잘못된 입력입니다.");
-        } else {                                                                // 있을 경우 출력
-            System.out.println(customerRev.toString());
+        while (true) {
+            try {
+                UUID rev_id = UUID.fromString(sc.nextLine());
+                Reservation customerRev = hotel.getCustomerReservations(rev_id);        // 조회된 고객 Reservation 객체 반환
+                if (customerRev == null) {                                               // 반환된 객체가 없을 경우 잘못된 입력
+                    System.out.println("잘못된 입력입니다.");
+                } else {                                                                // 있을 경우 출력
+                    System.out.println(customerRev.toString());
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("올바른 ID가 아닙니다. 다시 입력해주세요. \n(메인메뉴로 돌아가기는 9번을 눌러주세요.)");
+                int escapeNum = sc.nextInt();
+                if (escapeNum == 9) {
+                    System.out.println("메인메뉴로 돌아갑니다.");
+                    sc.nextLine();
+                    break;
+                }
+            }
         }
     }
 
