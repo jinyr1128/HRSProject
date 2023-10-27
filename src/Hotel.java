@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -92,9 +93,9 @@ class Hotel {
     }
 
     // 특정 고객의 예약 정보 반환 메소드
-    public Reservation getCustomerReservations(UUID id) {
+    public Reservation getCustomerReservations(String id) {
         for (Reservation reservation : reservations) {
-            if (reservation.getId().equals(id)) {
+            if (reservation.getId().toString().equals(id)) {
                 return reservation;
             }
         }
@@ -114,6 +115,8 @@ class Hotel {
 
     // 총 보유 자산 출력
     public void getAssets() {
-        System.out.println(assets);
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String separatedAssets = df.format(assets);
+        System.out.println(separatedAssets);
     }
 }
